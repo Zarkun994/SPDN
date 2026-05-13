@@ -1,4 +1,4 @@
-# Phenology Distillation (Public Framework)
+# Phenology Distillation
 
 This repository provides a framework for a two-stage winter wheat phenology model:
 
