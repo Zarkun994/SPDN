@@ -1,0 +1,70 @@
+seed: 42
+
+data:
+  era_dir: "path/to/era_processed"
+  vi_dir: "path/to/landsat_or_vi_processed"
+  output_dir: "outputs"
+  era_file_glob: "ERA5_Daily_*_processed.csv"
+  vi_file_glob: "Landsat_daily_interp_*_NDVI_NDWI*.csv"
+
+  label_configs:
+    - wheat_type: "semi_winter"
+      label_xlsx: "path/to/label_file.xlsx"
+      point_shp: null
+
+stages:
+  names:
+    - "Sowing"
+    - "Emergence"
+    - "ThreeLeaf"
+    - "Tillering"
+    - "Jointing"
+    - "Booting"
+    - "Heading"
+    - "Flowering"
+    - "MilkyRipe"
+    - "Maturity"
+
+features:
+  meteo: ["ET_mm", "GDD_sum", "Rad_MJ", "soil_water"]
+  vi: ["NDVI", "NDWI"]
+  vi_stats: ["mean", "max", "range", "sum", "slope", "std"]
+  photo_stats: ["Photo_mean", "Photo_slope"]
+  ant_extra_stats: ["cumGDD_since_sow_end"]
+
+windows:
+  cal_base_month: 8
+  cal_base_day: 1
+  cal_k: 12
+  ant_k: 12
+
+training:
+  batch_size: 32
+  epochs_cal: 60
+  epochs_ant: 36
+  lr_cal: 0.0007
+  lr_ant: 0.0005
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  smooth_beta: 5.0
+  lambda_sup: 1.3
+  lambda_kd: 0.5
+  order_w_teacher: 0.2
+  order_w_student: 0.2
+  student_pred_mix_max: 0.75
+  student_pred_mix_warmup: 0.25
+  dl_jitter_std: 1.0
+
+split:
+  train_year_mode: "downweight"   # recent_only | downweight | all
+  recent_train_start_year: 2015
+  old_year_cutoff: 2014
+  old_year_weight_2009_2011: 0.15
+  old_year_weight_2012_2014: 0.35
+  max_sampler_multiplier: 1.0
+
+ranges:
+  sow_min: 200.0
+  sow_max: 420.0
+  slen_min: 30.0
+  slen_max: 380.0
