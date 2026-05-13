@@ -1,11 +1,11 @@
 # Phenology Distillation (Public Framework)
 
-This repository provides a **clean public framework** for a two-stage winter wheat phenology model:
+This repository provides a framework for a two-stage winter wheat phenology model:
 
 1. **Stage 1** predicts sowing date and season length from calendar-window features.
 2. **Stage 2** performs teacher-student distillation on ANT-style phase bins built from the estimated season parameters.
 
-The code is intentionally organized as a **public-facing skeleton**. It keeps the main model structure and training logic, while removing private local paths, project-specific file names, and unnecessary experimental traces.
+It keeps the main model structure and training logic, while removing private local paths, project-specific file names, and unnecessary experimental traces.
 
 ## Highlights
 
@@ -13,8 +13,6 @@ The code is intentionally organized as a **public-facing skeleton**. It keeps th
 - ANT-based temporal encoder for phenology-stage prediction
 - Teacher autoregressive decoder + student parallel decoder
 - Zero-leak evaluation pipeline
-- Optional photoperiod and cumulative GDD features
-- Config-driven file paths and runtime settings
 
 ## Repository layout
 
@@ -90,18 +88,3 @@ cp configs/config.example.yaml configs/config.yaml
 ```bash
 python run.py --config configs/config.yaml
 ```
-
-## Notes for a public GitHub release
-
-This version is designed for sharing with reviewers/readers. Before publishing:
-
-- keep only generic paths in the YAML config
-- do not upload private raw data
-- do not include internal directory names or local machine paths
-- keep README focused on method and input format
-
-## Citation / reproducibility note
-
-If the original dataset is restricted, you can add a sentence such as:
-
-> The original data contain restricted research assets and are therefore not publicly released. This repository provides the core implementation and a template for reproducing the workflow on similarly structured data.
